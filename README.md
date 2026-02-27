@@ -1,3 +1,5 @@
+![License Manager Banner](License_Manager_Banner_88271288.jpg)
+
 # Laravel Licensing
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/devravik/laravel-licensing.svg?style=flat-square)](https://packagist.org/packages/devravik/laravel-licensing)
