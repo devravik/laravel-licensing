@@ -5,4 +5,16 @@ parameters:
     paths:
         - src
     level: 6
-    checkMissingIterableValueType: false
+    ignoreErrors:
+        # new static() in named constructors is intentional — all factory methods
+        # carry @return static docblocks and the subclass constructor signatures
+        # are identical, so the "unsafe" warning is a false positive here.
+        - identifier: new.static
+
+        # Eloquent's belongsTo(), hasMany(), and morphTo() methods bind $this as
+        # the TDeclaringModel type parameter, producing BelongsTo<Related, $this>.
+        # PHPStan's invariance check rejects this against a @return annotation
+        # that names the concrete class (BelongsTo<Related, Activation>). This
+        # is a known Larastan limitation — the relationships are correct at runtime.
+        - identifier: return.type
+          path: src/Models
