@@ -18,3 +18,9 @@ parameters:
         # is a known Larastan limitation — the relationships are correct at runtime.
         - identifier: return.type
           path: src/Models
+
+        # HasLicenses is a consumer-facing trait intended to be used in host
+        # application models (e.g. User). It is not used internally by the
+        # package, so PHPStan's "used zero times" warning is a false positive.
+        - identifier: trait.unused
+          path: src/Support
