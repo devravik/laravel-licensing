@@ -6,9 +6,25 @@
 [![PHP Version](https://img.shields.io/packagist/php-v/devravik/laravel-licensing.svg?style=flat-square)](https://packagist.org/packages/devravik/laravel-licensing)
 [![License](https://img.shields.io/packagist/l/devravik/laravel-licensing.svg?style=flat-square)](https://packagist.org/packages/devravik/laravel-licensing)
 
-A production-ready Laravel package for generating, managing, activating, and validating software licenses — directly inside your application.
+A production-ready Laravel package for generating, managing, activating, and validating software licenses  directly inside your application.
 
-License keys are hashed before storage (never plaintext in the database), activations are seat-controlled, and the entire lifecycle — creation, validation, activation, revocation, and expiry — is covered by typed exceptions and dispatchable events.
+License keys are hashed before storage (never plaintext in the database), activations are seat-controlled, and the entire lifecycle  creation, validation, activation, revocation, and expiry  is covered by typed exceptions and dispatchable events.
+
+---
+
+## 🚀 Starter Kit
+
+**New to this package?** Check out the [Laravel Licensing Starter](https://github.com/devravik/laravel-licensing-starter)  a complete working example that demonstrates how to use this package in a real Laravel application.
+
+The starter kit includes:
+- Full license management dashboard
+- User management with license assignment
+- License creation, activation, and validation workflows
+- API endpoints for license validation and activation
+- Complete UI built with Laravel Breeze
+- Demo data and examples
+
+Perfect for understanding how to integrate this package into your own application!
 
 ---
 
@@ -195,7 +211,7 @@ License::revoke($rawKey);
 ### Checking License Status
 
 ```php
-$license = License::find($rawKey); // no exception on failure — returns null
+$license = License::find($rawKey); // no exception on failure  returns null
 
 $license->isValid();           // not revoked and not fully expired
 $license->isExpired();         // past expiration date
@@ -283,7 +299,7 @@ You can customise the response by extending `AbstractLicenseMiddleware` and over
 | `LicenseRevoked` | `revoke()` is called | `$event->license` |
 | `LicenseExpired` | Dispatched manually from a scheduled command | `$event->license` |
 
-`LicenseExpired` is intentionally **not** dispatched automatically — it should be fired from a scheduled command so you control when and how expiration is processed:
+`LicenseExpired` is intentionally **not** dispatched automatically  it should be fired from a scheduled command so you control when and how expiration is processed:
 
 ```php
 // routes/console.php  (Laravel 11+)
@@ -385,7 +401,7 @@ A unique composite index on `(license_id, binding)` prevents duplicate activatio
 
 ### Polymorphic Ownership
 
-Licenses can belong to any model — not just users. Add the `HasLicenses` trait:
+Licenses can belong to any model  not just users. Add the `HasLicenses` trait:
 
 ```php
 // app/Models/Team.php
@@ -481,14 +497,14 @@ public function activate(Request $request)
 
 ## Security
 
-- **Key generation** uses `random_bytes()` — a cryptographically secure CSPRNG. No `openssl` extension required.
-- **Key storage** — keys are hashed with bcrypt via Laravel's `Hash` facade before being written to the database. The raw key is never persisted. A SHA-256 `lookup_token` is stored alongside to enable fast lookups without a full-table bcrypt scan.
+- **Key generation** uses `random_bytes()`  a cryptographically secure CSPRNG. No `openssl` extension required.
+- **Key storage**  keys are hashed with bcrypt via Laravel's `Hash` facade before being written to the database. The raw key is never persisted. A SHA-256 `lookup_token` is stored alongside to enable fast lookups without a full-table bcrypt scan.
 - **Key comparison** uses `Hash::check()`, which is resistant to timing attacks.
-- **One-time retrieval** — the raw key is available only during the `create()` call. Transmit it to the end user immediately over a secure channel (HTTPS).
+- **One-time retrieval**  the raw key is available only during the `create()` call. Transmit it to the end user immediately over a secure channel (HTTPS).
 
 **Production checklist:**
 
-1. Keep `hash_keys = true` — never disable in production.
+1. Keep `hash_keys = true`  never disable in production.
 2. Use HTTPS for all endpoints that transmit or receive license keys.
 3. Rate-limit validation and activation endpoints to prevent brute-force guessing.
 4. Use the provided events to audit all license operations.
@@ -569,7 +585,7 @@ When reporting a bug, please include your PHP and Laravel version, the package v
 
 ## Security Vulnerabilities
 
-Please do **not** report security vulnerabilities via GitHub Issues. Email `dev.ravikgupt@gmail.com` with the subject line `[SECURITY] devravik/laravel-licensing — <brief description>`. You will receive a response within 48 hours.
+Please do **not** report security vulnerabilities via GitHub Issues. Email `dev.ravikgupt@gmail.com` with the subject line `[SECURITY] devravik/laravel-licensing  <brief description>`. You will receive a response within 48 hours.
 
 See [SECURITY.md](SECURITY.md) for details.
 
