@@ -5,7 +5,7 @@ namespace DevRavik\LaravelLicensing\Tests\Unit;
 use DevRavik\LaravelLicensing\Contracts\LicenseContract;
 use DevRavik\LaravelLicensing\Exceptions\LicenseExpiredException;
 use DevRavik\LaravelLicensing\Exceptions\LicenseRevokedException;
-use DevRavik\LaravelLicensing\LicenseValidator;
+use DevRavik\LaravelLicensing\Services\LicenseValidator;
 use DevRavik\LaravelLicensing\Tests\TestCase;
 use Mockery;
 

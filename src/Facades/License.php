@@ -4,7 +4,7 @@ namespace DevRavik\LaravelLicensing\Facades;
 
 use DevRavik\LaravelLicensing\Contracts\ActivationContract;
 use DevRavik\LaravelLicensing\Contracts\LicenseContract;
-use DevRavik\LaravelLicensing\LicenseBuilder;
+use DevRavik\LaravelLicensing\Services\LicenseBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
 
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool                   revoke(string $key)
  * @method static LicenseContract|null   find(string $key)
  *
- * @see \DevRavik\LaravelLicensing\LicenseManager
+ * @see \DevRavik\LaravelLicensing\Services\LicenseManager
  */
 class License extends Facade
 {

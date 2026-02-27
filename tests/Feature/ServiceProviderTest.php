@@ -5,8 +5,8 @@ namespace DevRavik\LaravelLicensing\Tests\Feature;
 use DevRavik\LaravelLicensing\Contracts\KeyGeneratorContract;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
 use DevRavik\LaravelLicensing\Facades\License;
-use DevRavik\LaravelLicensing\KeyGenerator;
-use DevRavik\LaravelLicensing\LicenseManager;
+use DevRavik\LaravelLicensing\Services\KeyGenerator;
+use DevRavik\LaravelLicensing\Services\LicenseManager;
 use DevRavik\LaravelLicensing\Tests\TestCase;
 
 class ServiceProviderTest extends TestCase

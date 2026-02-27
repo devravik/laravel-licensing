@@ -2,7 +2,7 @@
 
 namespace DevRavik\LaravelLicensing\Contracts;
 
-use DevRavik\LaravelLicensing\LicenseBuilder;
+use DevRavik\LaravelLicensing\Services\LicenseBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 /**

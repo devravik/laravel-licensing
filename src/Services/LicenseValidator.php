@@ -1,6 +1,6 @@
 <?php
 
-namespace DevRavik\LaravelLicensing;
+namespace DevRavik\LaravelLicensing\Services;
 
 use DevRavik\LaravelLicensing\Contracts\LicenseContract;
 use DevRavik\LaravelLicensing\Exceptions\LicenseExpiredException;

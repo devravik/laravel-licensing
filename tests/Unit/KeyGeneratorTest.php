@@ -2,7 +2,7 @@
 
 namespace DevRavik\LaravelLicensing\Tests\Unit;
 
-use DevRavik\LaravelLicensing\KeyGenerator;
+use DevRavik\LaravelLicensing\Services\KeyGenerator;
 use PHPUnit\Framework\TestCase;
 
 class KeyGeneratorTest extends TestCase

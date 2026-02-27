@@ -1,6 +1,6 @@
 <?php
 
-namespace DevRavik\LaravelLicensing;
+namespace DevRavik\LaravelLicensing\Services;
 
 use Carbon\Carbon;
 use DevRavik\LaravelLicensing\Contracts\ActivationContract;

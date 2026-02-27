@@ -4,8 +4,8 @@ namespace DevRavik\LaravelLicensing\Tests\Unit;
 
 use Carbon\Carbon;
 use DevRavik\LaravelLicensing\Contracts\LicenseContract;
-use DevRavik\LaravelLicensing\LicenseBuilder;
-use DevRavik\LaravelLicensing\LicenseManager;
+use DevRavik\LaravelLicensing\Services\LicenseBuilder;
+use DevRavik\LaravelLicensing\Services\LicenseManager;
 use Illuminate\Database\Eloquent\Model;
 use Mockery;
 use Orchestra\Testbench\TestCase;
