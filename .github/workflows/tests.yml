@@ -21,8 +21,12 @@ jobs:
             testbench: '8.*'
           - laravel: '11.*'
             testbench: '9.*'
+        exclude:
+          # Laravel 11+ requires PHP ^8.2
+          - php: '8.1'
+            laravel: '11.*'
 
-    name: PHP ${{ matrix.php }} — Laravel ${{ matrix.laravel }} — mysql
+    name: PHP ${{ matrix.php }} — Laravel ${{ matrix.laravel }}
 
     services:
       mysql:
@@ -51,12 +55,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" \
-                           "orchestra/testbench:${{ matrix.testbench }}" \
-                           --no-interaction --no-update
+          composer require --dev \
+            "laravel/framework:${{ matrix.laravel }}" \
+            "orchestra/testbench:${{ matrix.testbench }}" \
+            --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      - name: Run tests (MySQL)
+      - name: Run tests
         env:
           TEST_DB_DRIVER: mysql
           TEST_DB_HOST: 127.0.0.1
