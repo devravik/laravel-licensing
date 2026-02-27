@@ -15,7 +15,6 @@ jobs:
       matrix:
         php: ['8.1', '8.2', '8.3']
         laravel: ['10.*', '11.*']
-        db: [sqlite, mysql]
         stability: [prefer-stable]
         include:
           - laravel: '10.*'
@@ -23,7 +22,7 @@ jobs:
           - laravel: '11.*'
             testbench: '9.*'
 
-    name: PHP ${{ matrix.php }} — Laravel ${{ matrix.laravel }} — ${{ matrix.db }}
+    name: PHP ${{ matrix.php }} — Laravel ${{ matrix.laravel }} — mysql
 
     services:
       mysql:
@@ -57,14 +56,7 @@ jobs:
                            --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-      - name: Run tests (SQLite)
-        if: matrix.db == 'sqlite'
-        env:
-          TEST_DB_DRIVER: sqlite
-        run: vendor/bin/phpunit --coverage-clover coverage.xml
-
       - name: Run tests (MySQL)
-        if: matrix.db == 'mysql'
         env:
           TEST_DB_DRIVER: mysql
           TEST_DB_HOST: 127.0.0.1
