@@ -26,6 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `license:status` Artisan command for verifying package configuration
 - Publishable config (`config/license.php`) and migrations
 - Full test suite covering feature and unit scenarios across MySQL and SQLite
-- Support for Laravel 10, 11, and 12 with PHP 8.1, 8.2, and 8.3
+- Support for Laravel 10 and 11 with PHP 8.1, 8.2, and 8.3
 
 [1.0.0]: https://github.com/devravik/laravel-licensing/releases/tag/1.0.0

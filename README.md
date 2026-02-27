@@ -17,7 +17,7 @@ License keys are hashed before storage (never plaintext in the database), activa
 | Dependency | Version |
 |------------|---------|
 | PHP | `^8.1` |
-| Laravel | `^10.0 \| ^11.0 \| ^12.0` |
+| Laravel | `^10.0 \| ^11.0` |
 
 ---
 
