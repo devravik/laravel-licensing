@@ -575,6 +575,17 @@ See [SECURITY.md](SECURITY.md) for details.
 
 ---
 
+## Maintainer
+
+**Ravi K Gupta**
+
+- **Website**: [devravik.github.io](https://devravik.github.io/)
+- **Email**: `dev.ravikgupt@gmail.com`
+- **LinkedIn**: [linkedin.com/in/ravi-k-dev](https://www.linkedin.com/in/ravi-k-dev)
+- **GitHub**: [github.com/devravik](https://github.com/devravik)
+
+---
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
