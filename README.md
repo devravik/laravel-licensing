@@ -514,12 +514,9 @@ public function activate(Request $request)
 
 ## Testing
 
-The package test suite runs against both MySQL and SQLite:
+The package test suite runs against MySQL:
 
 ```bash
-# SQLite (no external dependency)
-TEST_DB_DRIVER=sqlite vendor/bin/phpunit
-
 # MySQL
 TEST_DB_DRIVER=mysql \
 TEST_DB_HOST=127.0.0.1 \

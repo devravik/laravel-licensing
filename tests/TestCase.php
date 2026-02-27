@@ -20,7 +20,7 @@ abstract class TestCase extends Orchestra
         // loadMigrationsFrom() is smart: when RefreshDatabase is used and
         // migrate:fresh hasn't run yet, it registers the path with the migrator
         // so that migrate:fresh will include the package migrations automatically.
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     protected function defineDatabaseMigrationsAfterDatabaseRefreshed(): void
@@ -42,29 +42,20 @@ abstract class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        $driver = env('TEST_DB_DRIVER', 'sqlite');
+        $driver = env('TEST_DB_DRIVER', 'mysql');
 
-        if ($driver === 'sqlite') {
-            // Default: SQLite in-memory — no external service required.
-            config()->set('database.connections.testing', [
-                'driver'   => 'sqlite',
-                'database' => ':memory:',
-                'prefix'   => '',
-            ]);
-        } else {
-            // MySQL / PostgreSQL: driven entirely by env vars in CI.
-            config()->set('database.connections.testing', [
-                'driver'    => $driver,
-                'host'      => env('TEST_DB_HOST', '127.0.0.1'),
-                'port'      => env('TEST_DB_PORT', '3306'),
-                'database'  => env('TEST_DB_DATABASE', 'laravel_licensing_test'),
-                'username'  => env('TEST_DB_USERNAME', 'root'),
-                'password'  => env('TEST_DB_PASSWORD', ''),
-                'charset'   => 'utf8mb4',
-                'collation' => 'utf8mb4_unicode_ci',
-                'prefix'    => '',
-            ]);
-        }
+        // MySQL configuration — driven entirely by env vars in CI.
+        config()->set('database.connections.testing', [
+            'driver' => $driver,
+            'host' => env('TEST_DB_HOST', '127.0.0.1'),
+            'port' => env('TEST_DB_PORT', '3306'),
+            'database' => env('TEST_DB_DATABASE', 'laravel_licensing_test'),
+            'username' => env('TEST_DB_USERNAME', 'root'),
+            'password' => env('TEST_DB_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+        ]);
 
         // Use low bcrypt cost for fast test runs.
         config()->set('hashing.bcrypt.rounds', 4);

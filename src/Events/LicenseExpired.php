@@ -32,8 +32,6 @@ class LicenseExpired
 
     /**
      * The expired license instance.
-     *
-     * @var LicenseContract
      */
     public LicenseContract $license;
 

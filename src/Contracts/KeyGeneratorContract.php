@@ -17,7 +17,7 @@ interface KeyGeneratorContract
      * suitable for display and transmission over HTTP.
      *
      * @param  int  $length  Number of characters in the generated key.
-     * @return string        The raw (unhashed) license key.
+     * @return string The raw (unhashed) license key.
      */
     public function generate(int $length): string;
 }

@@ -45,7 +45,7 @@ class CheckLicense extends AbstractLicenseMiddleware
             return $this->denyResponse(
                 $request,
                 "This route requires a '{$product}' license. "
-                . "The provided license is for '{$license->getProduct()}'.",
+                ."The provided license is for '{$license->getProduct()}'.",
                 403
             );
         }

@@ -5,11 +5,11 @@ namespace DevRavik\LaravelLicensing;
 use DevRavik\LaravelLicensing\Console\LicenseStatusCommand;
 use DevRavik\LaravelLicensing\Contracts\KeyGeneratorContract;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
+use DevRavik\LaravelLicensing\Http\Middleware\CheckLicense;
+use DevRavik\LaravelLicensing\Http\Middleware\CheckValidLicense;
 use DevRavik\LaravelLicensing\Services\KeyGenerator;
 use DevRavik\LaravelLicensing\Services\LicenseManager;
 use DevRavik\LaravelLicensing\Services\LicenseValidator;
-use DevRavik\LaravelLicensing\Http\Middleware\CheckLicense;
-use DevRavik\LaravelLicensing\Http\Middleware\CheckValidLicense;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +18,8 @@ class LicenseServiceProvider extends ServiceProvider
     /**
      * All package assets available for publishing.
      */
-    private const TAG_CONFIG     = 'license-config';
+    private const TAG_CONFIG = 'license-config';
+
     private const TAG_MIGRATIONS = 'license-migrations';
 
     // -------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class LicenseServiceProvider extends ServiceProvider
         // Merge the package config so consumers can use config('license.*')
         // even before they publish the config file.
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/license.php',
+            __DIR__.'/../config/license.php',
             'license'
         );
 
@@ -53,9 +54,9 @@ class LicenseServiceProvider extends ServiceProvider
             function ($app) {
                 return new LicenseManager(
                     keyGenerator: $app->make(KeyGeneratorContract::class),
-                    hasher:       $app['hash'],
-                    events:       $app['events'],
-                    validator:    $app->make(LicenseValidator::class),
+                    hasher: $app['hash'],
+                    events: $app['events'],
+                    validator: $app->make(LicenseValidator::class),
                 );
             }
         );
@@ -89,12 +90,12 @@ class LicenseServiceProvider extends ServiceProvider
 
         // Publish config/license.php
         $this->publishes([
-            __DIR__ . '/../config/license.php' => config_path('license.php'),
+            __DIR__.'/../config/license.php' => config_path('license.php'),
         ], self::TAG_CONFIG);
 
         // Publish migration stubs — consumers may edit before running.
         $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => database_path('migrations'),
         ], self::TAG_MIGRATIONS);
     }
 
@@ -118,8 +119,7 @@ class LicenseServiceProvider extends ServiceProvider
         /** @var Router $router */
         $router = $this->app['router'];
 
-        $router->aliasMiddleware('license',       CheckLicense::class);
+        $router->aliasMiddleware('license', CheckLicense::class);
         $router->aliasMiddleware('license.valid', CheckValidLicense::class);
     }
-
 }

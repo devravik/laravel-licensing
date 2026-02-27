@@ -54,7 +54,7 @@ class ServiceProviderTest extends TestCase
     public function test_license_alias_is_same_singleton_as_contract_binding(): void
     {
         $fromContract = $this->app->make(LicenseManagerContract::class);
-        $fromAlias    = $this->app->make('license');
+        $fromAlias = $this->app->make('license');
 
         $this->assertSame($fromContract, $fromAlias, "'license' alias must resolve to the same singleton as LicenseManagerContract.");
     }

@@ -34,7 +34,7 @@ class LicenseRevokedException extends LicenseManagerException
     {
         $revokedAt = $license->getRevokedAt();
 
-        $instance            = new static(
+        $instance = new static(
             "This license was revoked on {$revokedAt->toFormattedDateString()} and can no longer be used."
         );
         $instance->revokedAt = $revokedAt;

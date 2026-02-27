@@ -60,14 +60,14 @@ class LicenseManager implements LicenseManagerContract
         ?Carbon $expiresAt,
     ): LicenseContract {
         $keyLength = (int) config('license.key_length', 32);
-        $rawKey    = $this->keyGenerator->generate($keyLength);
+        $rawKey = $this->keyGenerator->generate($keyLength);
 
         $licenseModelClass = config('license.license_model');
 
         /** @var \DevRavik\LaravelLicensing\Models\License $license */
-        $license = new $licenseModelClass();
-        $license->product    = $product;
-        $license->seats      = $seats;
+        $license = new $licenseModelClass;
+        $license->product = $product;
+        $license->seats = $seats;
         $license->expires_at = $expiresAt;
         $license->revoked_at = null;
 
@@ -77,8 +77,8 @@ class LicenseManager implements LicenseManagerContract
         // Hash the key before persisting if hash_keys is enabled.
         // Also store a SHA-256 lookup token so that findByKey() can pre-filter
         // by an indexed column instead of doing a full-table bcrypt scan.
-        $shouldHash            = (bool) config('license.hash_keys', true);
-        $license->key          = $shouldHash ? $this->hasher->make($rawKey) : $rawKey;
+        $shouldHash = (bool) config('license.hash_keys', true);
+        $license->key = $shouldHash ? $this->hasher->make($rawKey) : $rawKey;
         $license->lookup_token = $shouldHash ? hash('sha256', $rawKey) : null;
 
         $license->save();
@@ -99,9 +99,9 @@ class LicenseManager implements LicenseManagerContract
     /**
      * Validate a raw license key and return the license if valid.
      *
-     * @throws InvalidLicenseException  If the key does not match any record.
-     * @throws LicenseRevokedException  If the license has been revoked.
-     * @throws LicenseExpiredException  If the license is expired beyond grace.
+     * @throws InvalidLicenseException If the key does not match any record.
+     * @throws LicenseRevokedException If the license has been revoked.
+     * @throws LicenseExpiredException If the license is expired beyond grace.
      */
     public function validate(string $key): LicenseContract
     {
@@ -124,10 +124,10 @@ class LicenseManager implements LicenseManagerContract
     /**
      * Activate a license against a binding identifier, consuming one seat.
      *
-     * @throws InvalidLicenseException          If the key is not valid.
-     * @throws LicenseRevokedException          If the license is revoked.
-     * @throws LicenseExpiredException          If the license is expired.
-     * @throws SeatLimitExceededException       If no seats remain.
+     * @throws InvalidLicenseException If the key is not valid.
+     * @throws LicenseRevokedException If the license is revoked.
+     * @throws LicenseExpiredException If the license is expired.
+     * @throws SeatLimitExceededException If no seats remain.
      * @throws LicenseAlreadyActivatedException If the binding already exists.
      */
     public function activate(string $key, string $binding): ActivationContract
@@ -153,9 +153,9 @@ class LicenseManager implements LicenseManagerContract
         }
 
         /** @var \DevRavik\LaravelLicensing\Models\Activation $activation */
-        $activation = new $activationModelClass();
-        $activation->license_id   = $license->getKey();
-        $activation->binding      = $binding;
+        $activation = new $activationModelClass;
+        $activation->license_id = $license->getKey();
+        $activation->binding = $binding;
         $activation->activated_at = now();
         $activation->save();
 
@@ -261,7 +261,7 @@ class LicenseManager implements LicenseManagerContract
     protected function findByKey(string $rawKey): ?LicenseContract
     {
         $licenseModelClass = config('license.license_model');
-        $shouldHash        = (bool) config('license.hash_keys', true);
+        $shouldHash = (bool) config('license.hash_keys', true);
 
         if (! $shouldHash) {
             return $licenseModelClass::where('key', $rawKey)->first();

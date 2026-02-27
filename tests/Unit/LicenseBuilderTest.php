@@ -23,9 +23,12 @@ class LicenseBuilderTest extends TestCase
         parent::setUp();
 
         // Anonymous concrete model (no DB calls needed for builder tests).
-        $this->owner = new class extends Model {
+        $this->owner = new class extends Model
+        {
             protected $primaryKey = 'id';
-            public $exists       = true;
+
+            public $exists = true;
+
             protected $attributes = ['id' => 1];
         };
 
@@ -94,20 +97,20 @@ class LicenseBuilderTest extends TestCase
     // expiresInDays()
     // -------------------------------------------------------------------------
 
-    public function test_expiresInDays_returns_the_builder_for_chaining(): void
+    public function test_expires_in_days_returns_the_builder_for_chaining(): void
     {
         $builder = $this->builder();
         $this->assertSame($builder, $builder->expiresInDays(30));
     }
 
-    public function test_expiresInDays_rejects_zero(): void
+    public function test_expires_in_days_rejects_zero(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/at least 1/');
         $this->builder()->expiresInDays(0);
     }
 
-    public function test_expiresInDays_rejects_negative_values(): void
+    public function test_expires_in_days_rejects_negative_values(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->builder()->expiresInDays(-1);
@@ -117,14 +120,14 @@ class LicenseBuilderTest extends TestCase
     // expiresAt()
     // -------------------------------------------------------------------------
 
-    public function test_expiresAt_returns_the_builder_for_chaining(): void
+    public function test_expires_at_returns_the_builder_for_chaining(): void
     {
         $builder = $this->builder();
-        $future  = Carbon::now()->addDays(30);
+        $future = Carbon::now()->addDays(30);
         $this->assertSame($builder, $builder->expiresAt($future));
     }
 
-    public function test_expiresAt_rejects_a_past_date(): void
+    public function test_expires_at_rejects_a_past_date(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('/future/');
@@ -148,7 +151,7 @@ class LicenseBuilderTest extends TestCase
 
     public function test_create_delegates_to_manager_with_explicit_expiry(): void
     {
-        $future  = Carbon::now()->addDays(30);
+        $future = Carbon::now()->addDays(30);
         $license = Mockery::mock(LicenseContract::class);
 
         $this->manager
@@ -214,7 +217,7 @@ class LicenseBuilderTest extends TestCase
         config(['license.default_expiry_days' => 365]);
 
         $explicitExpiry = Carbon::now()->addDays(7);
-        $license        = Mockery::mock(LicenseContract::class);
+        $license = Mockery::mock(LicenseContract::class);
 
         $this->manager
             ->shouldReceive('createLicense')
@@ -239,7 +242,7 @@ class LicenseBuilderTest extends TestCase
     // toArray()
     // -------------------------------------------------------------------------
 
-    public function test_toArray_returns_expected_keys(): void
+    public function test_to_array_returns_expected_keys(): void
     {
         $state = $this->builder()->product('pro')->seats(5)->toArray();
 
@@ -250,7 +253,7 @@ class LicenseBuilderTest extends TestCase
         $this->assertArrayHasKey('expires_at', $state);
     }
 
-    public function test_toArray_reflects_configured_values(): void
+    public function test_to_array_reflects_configured_values(): void
     {
         $future = Carbon::now()->addDays(10);
 
@@ -266,7 +269,7 @@ class LicenseBuilderTest extends TestCase
         $this->assertNotNull($state['expires_at']);
     }
 
-    public function test_toArray_expires_at_is_null_when_not_set(): void
+    public function test_to_array_expires_at_is_null_when_not_set(): void
     {
         $state = $this->builder()->product('pro')->toArray();
         $this->assertNull($state['expires_at']);

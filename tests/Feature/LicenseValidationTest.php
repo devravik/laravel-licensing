@@ -13,9 +13,9 @@ class LicenseValidationTest extends TestCase
 {
     public function test_valid_license_passes_validation(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         $validated = License::validate($rawKey);
 
@@ -34,9 +34,9 @@ class LicenseValidationTest extends TestCase
     {
         config()->set('license.grace_period_days', 0);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         // Manually push expires_at into the past.
         $license->fresh()->update(['expires_at' => Carbon::yesterday()]);
@@ -49,9 +49,9 @@ class LicenseValidationTest extends TestCase
     {
         config()->set('license.grace_period_days', 7);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         // Manually push expires_at 3 days into the past (within the 7-day grace period).
         $license->fresh()->update(['expires_at' => now()->subDays(3)]);
@@ -63,9 +63,9 @@ class LicenseValidationTest extends TestCase
 
     public function test_revoked_license_fails_validation(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         License::revoke($rawKey);
 
@@ -75,7 +75,7 @@ class LicenseValidationTest extends TestCase
 
     public function test_validation_returns_license_contract(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('enterprise')->create();
 
         $validated = License::validate($license->key);

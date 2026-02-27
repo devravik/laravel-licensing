@@ -21,21 +21,17 @@ class LicenseDeactivated
 
     /**
      * The license from which the binding was removed.
-     *
-     * @var LicenseContract
      */
     public LicenseContract $license;
 
     /**
      * The binding identifier that was deactivated.
-     *
-     * @var string
      */
     public string $binding;
 
     /**
      * @param  LicenseContract  $license  The license that was deactivated.
-     * @param  string           $binding  The binding string that was removed.
+     * @param  string  $binding  The binding string that was removed.
      */
     public function __construct(LicenseContract $license, string $binding)
     {

@@ -19,25 +19,21 @@ class LicenseActivated
 
     /**
      * The license that was activated.
-     *
-     * @var LicenseContract
      */
     public LicenseContract $license;
 
     /**
      * The newly created activation record.
-     *
-     * @var ActivationContract
      */
     public ActivationContract $activation;
 
     /**
-     * @param  LicenseContract    $license     The license being activated.
-     * @param  ActivationContract $activation  The created activation record.
+     * @param  LicenseContract  $license  The license being activated.
+     * @param  ActivationContract  $activation  The created activation record.
      */
     public function __construct(LicenseContract $license, ActivationContract $activation)
     {
-        $this->license    = $license;
+        $this->license = $license;
         $this->activation = $activation;
     }
 }

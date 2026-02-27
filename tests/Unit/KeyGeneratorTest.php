@@ -12,7 +12,7 @@ class KeyGeneratorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->generator = new KeyGenerator();
+        $this->generator = new KeyGenerator;
     }
 
     // -------------------------------------------------------------------------
@@ -26,7 +26,7 @@ class KeyGeneratorTest extends TestCase
             $this->assertSame(
                 $length,
                 strlen($key),
-                "Expected key length {$length}, got " . strlen($key)
+                "Expected key length {$length}, got ".strlen($key)
             );
         }
     }

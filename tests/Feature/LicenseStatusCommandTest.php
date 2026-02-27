@@ -15,21 +15,21 @@ class LicenseStatusCommandTest extends TestCase
     {
         // Both tables are created by the migrations loaded in TestCase.
         $this->artisan('license:status')
-             ->assertSuccessful();
+            ->assertSuccessful();
     }
 
     public function test_command_output_contains_configuration_section(): void
     {
         $this->artisan('license:status')
-             ->expectsOutputToContain('Configuration')
-             ->assertSuccessful();
+            ->expectsOutputToContain('Configuration')
+            ->assertSuccessful();
     }
 
     public function test_command_output_contains_database_tables_section(): void
     {
         $this->artisan('license:status')
-             ->expectsOutputToContain('Database Tables')
-             ->assertSuccessful();
+            ->expectsOutputToContain('Database Tables')
+            ->assertSuccessful();
     }
 
     public function test_command_output_shows_correct_key_length_from_config(): void
@@ -37,8 +37,8 @@ class LicenseStatusCommandTest extends TestCase
         config()->set('license.key_length', 32);
 
         $this->artisan('license:status')
-             ->expectsOutputToContain('32')
-             ->assertSuccessful();
+            ->expectsOutputToContain('32')
+            ->assertSuccessful();
     }
 
     public function test_command_output_shows_correct_grace_period_from_config(): void
@@ -46,15 +46,15 @@ class LicenseStatusCommandTest extends TestCase
         config()->set('license.grace_period_days', 14);
 
         $this->artisan('license:status')
-             ->expectsOutputToContain('14')
-             ->assertSuccessful();
+            ->expectsOutputToContain('14')
+            ->assertSuccessful();
     }
 
     public function test_command_output_confirms_package_is_configured_correctly(): void
     {
         $this->artisan('license:status')
-             ->expectsOutputToContain('Package is installed and configured correctly')
-             ->assertSuccessful();
+            ->expectsOutputToContain('Package is installed and configured correctly')
+            ->assertSuccessful();
     }
 
     // -------------------------------------------------------------------------
@@ -67,7 +67,7 @@ class LicenseStatusCommandTest extends TestCase
         Schema::drop('licenses');
 
         $this->artisan('license:status')
-             ->assertFailed();
+            ->assertFailed();
 
         // Re-create so other tests are not affected (RefreshDatabase handles
         // this across test files, but be explicit for within-file clarity).
@@ -79,21 +79,21 @@ class LicenseStatusCommandTest extends TestCase
         Schema::drop('licenses');
 
         $this->artisan('license:status')
-             ->expectsOutputToContain('missing')
-             ->assertFailed();
+            ->expectsOutputToContain('missing')
+            ->assertFailed();
     }
 
     public function test_command_output_shows_licenses_table_name(): void
     {
         $this->artisan('license:status')
-             ->expectsOutputToContain('licenses')
-             ->assertSuccessful();
+            ->expectsOutputToContain('licenses')
+            ->assertSuccessful();
     }
 
     public function test_command_output_shows_license_activations_table_name(): void
     {
         $this->artisan('license:status')
-             ->expectsOutputToContain('license_activations')
-             ->assertSuccessful();
+            ->expectsOutputToContain('license_activations')
+            ->assertSuccessful();
     }
 }

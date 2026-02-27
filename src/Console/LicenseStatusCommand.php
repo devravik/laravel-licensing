@@ -34,7 +34,7 @@ class LicenseStatusCommand extends Command
         $config = [
             ['Key Length',           config('license.key_length', 32)],
             ['Hash Keys',            config('license.hash_keys', true) ? '<fg=green>enabled</>' : '<fg=yellow>disabled (plaintext — not recommended for production)</>'],
-            ['Default Expiry (days)',config('license.default_expiry_days') ?? '<fg=yellow>null (licenses never expire by default)</>'],
+            ['Default Expiry (days)', config('license.default_expiry_days') ?? '<fg=yellow>null (licenses never expire by default)</>'],
             ['Grace Period (days)',  config('license.grace_period_days', 0)],
             ['License Model',       config('license.license_model')],
             ['Activation Model',    config('license.activation_model')],
@@ -47,7 +47,7 @@ class LicenseStatusCommand extends Command
         // ── Database Tables ──────────────────────────────────────────────────
         $this->line('<options=bold>Database Tables</>');
 
-        $licensesExist    = Schema::hasTable('licenses');
+        $licensesExist = Schema::hasTable('licenses');
         $activationsExist = Schema::hasTable('license_activations');
 
         $tables = [

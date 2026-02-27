@@ -16,10 +16,10 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
 
-        Event::assertDispatched(LicenseCreated::class, function ($event) use ($license) {
+        Event::assertDispatched(LicenseCreated::class, function ($event) {
             return $event->license->product === 'pro';
         });
     }
@@ -28,9 +28,9 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class, LicenseActivated::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         License::activate($key, 'example.com');
 
@@ -43,9 +43,9 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class, LicenseDeactivated::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         License::activate($key, 'example.com');
         License::deactivate($key, 'example.com');
@@ -59,9 +59,9 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class, LicenseRevoked::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         License::revoke($key);
 
@@ -72,7 +72,7 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('enterprise')->seats(5)->create();
 
         Event::assertDispatched(LicenseCreated::class, function ($event) {
@@ -85,12 +85,12 @@ class EventsTest extends TestCase
     {
         Event::fake([LicenseCreated::class, LicenseActivated::class]);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('basic')->seats(3)->create();
 
         License::activate($license->key, 'my-app.io');
 
-        Event::assertDispatched(LicenseActivated::class, function ($event) use ($license) {
+        Event::assertDispatched(LicenseActivated::class, function ($event) {
             return $event->license->product === 'basic'
                 && $event->activation->getBinding() === 'my-app.io';
         });

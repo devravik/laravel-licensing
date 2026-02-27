@@ -39,7 +39,7 @@ class ExceptionTest extends TestCase
     public function test_exception_message_does_not_contain_raw_key(): void
     {
         $rawKey = 'super-secret-key-12345';
-        $e      = InvalidLicenseException::forKey($rawKey);
+        $e = InvalidLicenseException::forKey($rawKey);
         $this->assertStringNotContainsString($rawKey, $e->getMessage());
     }
 

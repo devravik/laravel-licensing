@@ -18,7 +18,6 @@ interface LicenseManagerContract
      * Begin building a new license for the given owner model.
      *
      * @param  Model  $owner  Any Eloquent model (User, Team, etc.)
-     * @return LicenseBuilder
      */
     public function for(Model $owner): LicenseBuilder;
 
@@ -28,7 +27,6 @@ interface LicenseManagerContract
      * Throws an exception if the key is invalid, expired, or revoked.
      *
      * @param  string  $key  The raw (unhashed) license key.
-     * @return LicenseContract
      *
      * @throws \DevRavik\LaravelLicensing\Exceptions\InvalidLicenseException
      * @throws \DevRavik\LaravelLicensing\Exceptions\LicenseExpiredException
@@ -39,9 +37,8 @@ interface LicenseManagerContract
     /**
      * Activate a license against an identifier (domain, IP, machine ID).
      *
-     * @param  string  $key      The raw license key.
+     * @param  string  $key  The raw license key.
      * @param  string  $binding  The identifier to bind the activation to.
-     * @return ActivationContract
      *
      * @throws \DevRavik\LaravelLicensing\Exceptions\InvalidLicenseException
      * @throws \DevRavik\LaravelLicensing\Exceptions\SeatLimitExceededException
@@ -52,9 +49,9 @@ interface LicenseManagerContract
     /**
      * Remove an activation binding from a license, freeing the seat.
      *
-     * @param  string  $key      The raw license key.
+     * @param  string  $key  The raw license key.
      * @param  string  $binding  The binding identifier to remove.
-     * @return bool   True on success, false if binding was not found.
+     * @return bool True on success, false if binding was not found.
      *
      * @throws \DevRavik\LaravelLicensing\Exceptions\InvalidLicenseException
      */
@@ -66,7 +63,6 @@ interface LicenseManagerContract
      * All subsequent validate() or activate() calls on this key will fail.
      *
      * @param  string  $key  The raw license key.
-     * @return bool
      *
      * @throws \DevRavik\LaravelLicensing\Exceptions\InvalidLicenseException
      */
@@ -78,7 +74,6 @@ interface LicenseManagerContract
      * Returns null if the key does not match any record.
      *
      * @param  string  $key  The raw license key.
-     * @return LicenseContract|null
      */
     public function find(string $key): ?LicenseContract;
 }

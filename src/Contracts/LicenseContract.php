@@ -21,29 +21,21 @@ interface LicenseContract
      *
      * Used by CheckLicense middleware to verify the license is for the
      * required product tier.
-     *
-     * @return string
      */
     public function getProduct(): string;
 
     /**
      * Return the maximum number of allowed activation seats.
-     *
-     * @return int
      */
     public function getSeats(): int;
 
     /**
      * Return the expiration timestamp, or null if the license never expires.
-     *
-     * @return Carbon|null
      */
     public function getExpiresAt(): ?Carbon;
 
     /**
      * Return the revocation timestamp, or null if the license is not revoked.
-     *
-     * @return Carbon|null
      */
     public function getRevokedAt(): ?Carbon;
 
@@ -51,8 +43,6 @@ interface LicenseContract
      * Return the total number of active activation records for this license.
      *
      * Used by SeatLimitExceededException to report accurate seat usage.
-     *
-     * @return int
      */
     public function countActivations(): int;
 
@@ -66,8 +56,6 @@ interface LicenseContract
      * A valid license is one that:
      *   - has not been revoked
      *   - has not expired beyond its grace period
-     *
-     * @return bool
      */
     public function isValid(): bool;
 
@@ -76,8 +64,6 @@ interface LicenseContract
      *
      * A license with a null expires_at is considered never-expiring
      * and should always return false from this method.
-     *
-     * @return bool
      */
     public function isExpired(): bool;
 
@@ -87,15 +73,11 @@ interface LicenseContract
      *
      * Returns false if grace periods are disabled (grace_period_days = 0)
      * or if the license is not expired.
-     *
-     * @return bool
      */
     public function isInGracePeriod(): bool;
 
     /**
      * Determine whether the license has been revoked.
-     *
-     * @return bool
      */
     public function isRevoked(): bool;
 
@@ -105,15 +87,11 @@ interface LicenseContract
 
     /**
      * Return the number of activation seats still available.
-     *
-     * @return int
      */
     public function seatsRemaining(): int;
 
     /**
      * Determine whether at least one seat is available.
-     *
-     * @return bool
      */
     public function hasAvailableSeat(): bool;
 
@@ -125,8 +103,6 @@ interface LicenseContract
      * Return the number of days remaining in the grace period.
      *
      * Returns 0 if the license is not in a grace period.
-     *
-     * @return int
      */
     public function graceDaysRemaining(): int;
 }

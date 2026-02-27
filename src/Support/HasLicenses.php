@@ -36,11 +36,11 @@ trait HasLicenses
             ->whereNull('revoked_at')
             ->where(function ($query) use ($graceDays) {
                 $query->whereNull('expires_at')
-                      ->orWhere('expires_at', '>', now())
-                      ->when($graceDays > 0, function ($q) use ($graceDays) {
-                          // Also include licenses expired within the grace window.
-                          $q->orWhere('expires_at', '>', now()->subDays($graceDays));
-                      });
+                    ->orWhere('expires_at', '>', now())
+                    ->when($graceDays > 0, function ($q) use ($graceDays) {
+                        // Also include licenses expired within the grace window.
+                        $q->orWhere('expires_at', '>', now()->subDays($graceDays));
+                    });
             })
             ->get();
     }
@@ -60,10 +60,10 @@ trait HasLicenses
             ->whereNull('revoked_at')
             ->where(function ($query) use ($graceDays) {
                 $query->whereNull('expires_at')
-                      ->orWhere('expires_at', '>', now())
-                      ->when($graceDays > 0, function ($q) use ($graceDays) {
-                          $q->orWhere('expires_at', '>', now()->subDays($graceDays));
-                      });
+                    ->orWhere('expires_at', '>', now())
+                    ->when($graceDays > 0, function ($q) use ($graceDays) {
+                        $q->orWhere('expires_at', '>', now()->subDays($graceDays));
+                    });
             })
             ->exists();
     }

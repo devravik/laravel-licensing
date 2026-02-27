@@ -10,7 +10,7 @@ class SeatTest extends TestCase
 {
     public function test_single_seat_license_allows_one_activation(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(1)->create();
 
         License::activate($license->key, 'only-domain.com');
@@ -20,7 +20,7 @@ class SeatTest extends TestCase
 
     public function test_single_seat_license_rejects_second_activation(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(1)->create();
 
         License::activate($license->key, 'domain-a.com');
@@ -31,9 +31,9 @@ class SeatTest extends TestCase
 
     public function test_seats_remaining_decrements_with_each_activation(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(5)->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         $this->assertSame(5, $license->fresh()->seatsRemaining());
 
@@ -45,7 +45,7 @@ class SeatTest extends TestCase
 
     public function test_has_available_seat_returns_true_when_seats_remain(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(3)->create();
 
         $this->assertTrue($license->fresh()->hasAvailableSeat());
@@ -53,7 +53,7 @@ class SeatTest extends TestCase
 
     public function test_has_available_seat_returns_false_when_all_seats_used(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(2)->create();
 
         License::activate($license->key, 'site-1.com');
@@ -64,9 +64,9 @@ class SeatTest extends TestCase
 
     public function test_deactivation_increments_seats_remaining(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(2)->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         License::activate($key, 'site-a.com');
         License::activate($key, 'site-b.com');
@@ -80,9 +80,9 @@ class SeatTest extends TestCase
 
     public function test_seat_limit_exceeded_exception_carries_seat_counts(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->seats(2)->create();
-        $key     = $license->key;
+        $key = $license->key;
 
         License::activate($key, 'site-1.com');
         License::activate($key, 'site-2.com');
@@ -100,7 +100,7 @@ class SeatTest extends TestCase
     public function test_unlimited_seat_license_accepts_many_activations(): void
     {
         // seats > 100 effectively simulates unlimited for testing purposes.
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('enterprise')->seats(100)->create();
 
         for ($i = 1; $i <= 10; $i++) {

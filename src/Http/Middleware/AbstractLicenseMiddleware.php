@@ -2,7 +2,6 @@
 
 namespace DevRavik\LaravelLicensing\Http\Middleware;
 
-use Closure;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +46,7 @@ abstract class AbstractLicenseMiddleware
     {
         if ($request->expectsJson()) {
             return response()->json([
-                'error'   => 'license_check_failed',
+                'error' => 'license_check_failed',
                 'message' => $message,
             ], $status);
         }

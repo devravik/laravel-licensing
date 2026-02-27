@@ -46,7 +46,7 @@ class LicenseAlreadyActivatedException extends LicenseManagerException
      */
     public static function forBinding(LicenseContract $license, string $binding): static
     {
-        $instance          = new static(
+        $instance = new static(
             "The binding '{$binding}' is already activated on this license."
         );
         $instance->license = $license;

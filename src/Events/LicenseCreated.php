@@ -48,8 +48,6 @@ class LicenseCreated
      *
      * Note: The key attribute on this model is the RAW key (not hashed).
      * It will NOT match the database value on any subsequent retrieval.
-     *
-     * @var LicenseContract
      */
     public LicenseContract $license;
 

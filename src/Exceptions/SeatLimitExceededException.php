@@ -45,14 +45,14 @@ class SeatLimitExceededException extends LicenseManagerException
     public static function forLicense(LicenseContract $license): static
     {
         $allowed = $license->getSeats();
-        $used    = $license->countActivations();
+        $used = $license->countActivations();
 
-        $instance               = new static(
+        $instance = new static(
             "This license allows {$allowed} activation(s) and all {$used} seats are currently in use. "
-            . "Please deactivate an existing binding before adding a new one."
+            .'Please deactivate an existing binding before adding a new one.'
         );
         $instance->seatsAllowed = $allowed;
-        $instance->seatsUsed    = $used;
+        $instance->seatsUsed = $used;
 
         return $instance;
     }

@@ -39,7 +39,7 @@ class LicenseBuilder
     protected ?Carbon $expiresAt = null;
 
     /**
-     * @param  Model           $owner    The owner model.
+     * @param  Model  $owner  The owner model.
      * @param  LicenseManager  $manager  The manager instance that will persist the license.
      */
     public function __construct(
@@ -137,7 +137,7 @@ class LicenseBuilder
      * database (only a hash is stored) and will NOT be present on any
      * subsequent retrieval.
      *
-     * @return LicenseContract  The persisted license model with the raw key set.
+     * @return LicenseContract The persisted license model with the raw key set.
      *
      * @throws \InvalidArgumentException if product has not been set.
      */
@@ -161,9 +161,9 @@ class LicenseBuilder
         }
 
         return $this->manager->createLicense(
-            owner:     $this->owner,
-            product:   $this->product,
-            seats:     $this->seats,
+            owner: $this->owner,
+            product: $this->product,
+            seats: $this->seats,
             expiresAt: $expiresAt,
         );
     }
@@ -182,9 +182,9 @@ class LicenseBuilder
     {
         return [
             'owner_type' => get_class($this->owner),
-            'owner_id'   => $this->owner->getKey(),
-            'product'    => $this->product,
-            'seats'      => $this->seats,
+            'owner_id' => $this->owner->getKey(),
+            'product' => $this->product,
+            'seats' => $this->seats,
             'expires_at' => $this->expiresAt?->toIso8601String(),
         ];
     }

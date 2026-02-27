@@ -21,8 +21,6 @@ class LicenseRevoked
 
     /**
      * The revoked license instance.
-     *
-     * @var LicenseContract
      */
     public LicenseContract $license;
 

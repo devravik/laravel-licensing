@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Facade;
 /**
  * The License facade provides a static interface to the LicenseManager.
  *
- * @method static LicenseBuilder         for(Model $owner)
- * @method static LicenseContract        validate(string $key)
- * @method static ActivationContract     activate(string $key, string $binding)
- * @method static bool                   deactivate(string $key, string $binding)
- * @method static bool                   revoke(string $key)
- * @method static LicenseContract|null   find(string $key)
+ * @method static LicenseBuilder for(Model $owner)
+ * @method static LicenseContract validate(string $key)
+ * @method static ActivationContract activate(string $key, string $binding)
+ * @method static bool deactivate(string $key, string $binding)
+ * @method static bool revoke(string $key)
+ * @method static LicenseContract|null find(string $key)
  *
  * @see \DevRavik\LaravelLicensing\Services\LicenseManager
  */

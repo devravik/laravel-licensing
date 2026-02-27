@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('license_id')
-                  ->constrained('licenses')
-                  ->cascadeOnDelete();
+                ->constrained('licenses')
+                ->cascadeOnDelete();
 
             // The binding identifier: domain, IP, machine ID, or custom string.
             $table->string('binding', 255);

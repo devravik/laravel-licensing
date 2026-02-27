@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property int             $id
- * @property int             $license_id
- * @property string          $binding
- * @property \Carbon\Carbon  $activated_at
- * @property \Carbon\Carbon  $created_at
- * @property \Carbon\Carbon  $updated_at
+ * @property int $id
+ * @property int $license_id
+ * @property string $binding
+ * @property \Carbon\Carbon $activated_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  */
 class Activation extends Model implements ActivationContract
 {

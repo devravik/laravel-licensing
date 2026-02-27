@@ -19,7 +19,7 @@ class KeyGenerator implements KeyGeneratorContract
      *
      * @param  int  $length  Number of hex characters in the output key.
      *                       Must be between 16 and 128.
-     * @return string        Lowercase hex string of the requested length.
+     * @return string Lowercase hex string of the requested length.
      *
      * @throws \InvalidArgumentException if length is out of the acceptable range.
      */

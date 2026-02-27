@@ -32,7 +32,7 @@ class LicenseManagerException extends RuntimeException
      */
     public static function make(string $message, int $statusCode = 500): static
     {
-        $instance             = new static($message);
+        $instance = new static($message);
         $instance->statusCode = $statusCode;
 
         return $instance;

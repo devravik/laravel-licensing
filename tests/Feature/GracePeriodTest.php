@@ -12,9 +12,9 @@ class GracePeriodTest extends TestCase
     {
         config()->set('license.grace_period_days', 7);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         // Expire 3 days ago — still within 7-day grace window.
         $license->fresh()->update(['expires_at' => now()->subDays(3)]);
@@ -30,9 +30,9 @@ class GracePeriodTest extends TestCase
     {
         config()->set('license.grace_period_days', 3);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         // Expire 10 days ago — past the 3-day grace window.
         $license->fresh()->update(['expires_at' => now()->subDays(10)]);
@@ -45,9 +45,9 @@ class GracePeriodTest extends TestCase
     {
         config()->set('license.grace_period_days', 0);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         $license->fresh()->update(['expires_at' => now()->subDay()]);
 
@@ -59,7 +59,7 @@ class GracePeriodTest extends TestCase
     {
         config()->set('license.grace_period_days', 7);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(30)->create();
 
         $fresh = $license->fresh();
@@ -72,7 +72,7 @@ class GracePeriodTest extends TestCase
     {
         config()->set('license.grace_period_days', 7);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(1)->create();
 
         // Expire 2 days ago → 5 grace days remaining.
@@ -89,7 +89,7 @@ class GracePeriodTest extends TestCase
         config()->set('license.grace_period_days', 7);
         config()->set('license.default_expiry_days', null);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
 
         $fresh = $license->fresh();

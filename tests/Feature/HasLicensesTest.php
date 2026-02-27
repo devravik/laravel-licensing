@@ -49,7 +49,7 @@ class HasLicensesTest extends TestCase
     {
         $user = $this->createUserWithTrait();
 
-        $active  = License::for($user)->product('pro')->create();
+        $active = License::for($user)->product('pro')->create();
         $revoked = License::for($user)->product('basic')->create();
 
         License::revoke($revoked->key);

@@ -21,17 +21,17 @@ class LicenseCreationTest extends TestCase
         $this->assertSame('pro', $license->product);
         $this->assertSame(3, $license->seats);
         $this->assertDatabaseHas('licenses', [
-            'product'    => 'pro',
-            'owner_id'   => $user->id,
+            'product' => 'pro',
+            'owner_id' => $user->id,
             'owner_type' => get_class($user),
         ]);
     }
 
     public function test_raw_key_is_returned_at_creation_time(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         $this->assertNotEmpty($rawKey);
         $this->assertSame(32, strlen($rawKey)); // default key_length
@@ -39,9 +39,9 @@ class LicenseCreationTest extends TestCase
 
     public function test_raw_key_is_not_stored_in_database(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
-        $rawKey  = $license->key;
+        $rawKey = $license->key;
 
         $this->assertDatabaseMissing('licenses', ['key' => $rawKey]);
     }
@@ -50,7 +50,7 @@ class LicenseCreationTest extends TestCase
     {
         config()->set('license.default_expiry_days', 90);
 
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->create();
 
         $this->assertNotNull($license->fresh()->expires_at);
@@ -71,7 +71,7 @@ class LicenseCreationTest extends TestCase
 
     public function test_license_is_persisted_to_database(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('basic')->seats(1)->create();
 
         $this->assertDatabaseCount('licenses', 1);
@@ -80,7 +80,7 @@ class LicenseCreationTest extends TestCase
 
     public function test_license_expiry_can_be_set_explicitly(): void
     {
-        $user    = $this->createUser();
+        $user = $this->createUser();
         $license = License::for($user)->product('pro')->expiresInDays(15)->create();
 
         $this->assertEqualsWithDelta(

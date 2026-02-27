@@ -8,17 +8,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * @property int                   $id
- * @property string                $key
- * @property string|null           $lookup_token
- * @property string                $product
- * @property int                   $owner_id
- * @property string                $owner_type
- * @property int                   $seats
- * @property \Carbon\Carbon|null   $expires_at
- * @property \Carbon\Carbon|null   $revoked_at
- * @property \Carbon\Carbon        $created_at
- * @property \Carbon\Carbon        $updated_at
+ * @property int $id
+ * @property string $key
+ * @property string|null $lookup_token
+ * @property string $product
+ * @property int $owner_id
+ * @property string $owner_type
+ * @property int $seats
+ * @property \Carbon\Carbon|null $expires_at
+ * @property \Carbon\Carbon|null $revoked_at
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  */
 class License extends Model implements LicenseContract
 {
@@ -49,7 +49,7 @@ class License extends Model implements LicenseContract
      * @var array<string, string>
      */
     protected $casts = [
-        'seats'      => 'integer',
+        'seats' => 'integer',
         'expires_at' => 'datetime',
         'revoked_at' => 'datetime',
     ];
@@ -221,7 +221,7 @@ class License extends Model implements LicenseContract
         }
 
         $graceDays = (int) config('license.grace_period_days', 0);
-        $graceEnd  = $this->expires_at->copy()->addDays($graceDays);
+        $graceEnd = $this->expires_at->copy()->addDays($graceDays);
 
         return (int) now()->diffInDays($graceEnd, false);
     }

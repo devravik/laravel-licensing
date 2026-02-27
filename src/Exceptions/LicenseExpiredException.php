@@ -35,7 +35,7 @@ class LicenseExpiredException extends LicenseManagerException
     {
         $expiredAt = $license->getExpiresAt();
 
-        $instance            = new static(
+        $instance = new static(
             "This license expired on {$expiredAt->toFormattedDateString()} and is no longer valid."
         );
         $instance->expiredAt = $expiredAt;

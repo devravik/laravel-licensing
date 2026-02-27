@@ -16,7 +16,7 @@ class LicenseValidatorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validator = new LicenseValidator();
+        $this->validator = new LicenseValidator;
     }
 
     protected function tearDown(): void
