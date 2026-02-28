@@ -175,7 +175,6 @@ class LicenseManager implements LicenseManagerContract
      *
      * @param  LicenseContract  $license  The license instance
      * @param  string  $binding  The binding identifier
-     * @return ActivationContract
      *
      * @throws LicenseAlreadyActivatedException If the binding already exists.
      * @throws SeatLimitExceededException If no seats remain.
@@ -353,7 +352,6 @@ class LicenseManager implements LicenseManagerContract
      * List licenses with optional filtering.
      *
      * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked)
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function list(array $filters = []): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
@@ -422,7 +420,7 @@ class LicenseManager implements LicenseManagerContract
      * Get license statistics.
      *
      * @param  string|null  $product  Optional product filter
-     * @return array<string, mixed>  Statistics array
+     * @return array<string, mixed> Statistics array
      */
     public function getStatistics(?string $product = null): array
     {

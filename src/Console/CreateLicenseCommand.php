@@ -115,7 +115,7 @@ class CreateLicenseCommand extends Command
             $this->line("  ID: {$license->id}");
             $this->line("  Product: {$license->product}");
             $this->line("  Seats: {$license->seats}");
-            $this->line("  Expires: ".($license->expires_at ? $license->expires_at->format('Y-m-d H:i:s') : 'Never'));
+            $this->line('  Expires: '.($license->expires_at ? $license->expires_at->format('Y-m-d H:i:s') : 'Never'));
             $this->newLine();
             $this->warn('⚠️  IMPORTANT: Save this license key now. It will not be shown again.');
             $this->newLine();

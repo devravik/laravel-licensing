@@ -56,7 +56,7 @@ class RevokeLicenseCommand extends Command
         $this->line('<options=bold>License to Revoke</>');
         $this->line("  ID: {$license->id}");
         $this->line("  Product: {$license->product}");
-        $this->line("  Key: ".LicenseKeyHelper::mask($license->key ?? 'N/A'));
+        $this->line('  Key: '.LicenseKeyHelper::mask($license->key ?? 'N/A'));
         $this->newLine();
 
         // Confirmation

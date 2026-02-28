@@ -2,7 +2,6 @@
 
 namespace DevRavik\LaravelLicensing\Tests\Feature;
 
-use DevRavik\LaravelLicensing\Exceptions\InvalidLicenseException;
 use DevRavik\LaravelLicensing\Exceptions\InvalidSignatureException;
 use DevRavik\LaravelLicensing\Facades\License;
 use DevRavik\LaravelLicensing\Tests\TestCase;

@@ -65,7 +65,7 @@ class ActivateLicenseCommand extends Command
         // Use the key from option if provided (raw key)
         // If resolving by ID, we can activate directly using the license object
         $key = $this->option('key');
-        
+
         try {
             if ($key) {
                 // Activate using raw key (validates the license)
@@ -73,32 +73,32 @@ class ActivateLicenseCommand extends Command
             } else {
                 // Activate by ID - validate the license first
                 $validator->assertValid($license);
-                
+
                 // Use reflection to access protected createActivation method
                 // or create activation directly
                 $activationModelClass = config('license.activation_model');
-                
+
                 // Check for duplicate binding
                 $existing = $license->activations()
                     ->where('binding', $binding)
                     ->first();
-                
+
                 if ($existing !== null) {
                     throw LicenseAlreadyActivatedException::forBinding($license, $binding);
                 }
-                
+
                 // Check seat availability
                 if (! $license->hasAvailableSeat()) {
                     throw SeatLimitExceededException::forLicense($license);
                 }
-                
+
                 /** @var \DevRavik\LaravelLicensing\Models\Activation $activation */
                 $activation = new $activationModelClass;
                 $activation->license_id = $license->getKey();
                 $activation->binding = $binding;
                 $activation->activated_at = now();
                 $activation->save();
-                
+
                 // Dispatch event
                 event(new LicenseActivated($license, $activation));
             }
