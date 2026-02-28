@@ -22,3 +22,7 @@ parameters:
         # LicenseContract is an interface, not a Model, but implementations are Models
         # This is a false positive - at runtime, Collection contains Model instances
         - '#Type DevRavik\\LaravelLicensing\\Contracts\\LicenseContract in generic type.*Collection.*is not subtype of template type TModel#'
+
+        # LengthAwarePaginator generic type specification differences between PHPStan/Laravel versions
+        # CI environment may require TKey,TValue while local PHPStan expects only TItem - both are valid
+        - '#Generic type Illuminate\\Contracts\\Pagination\\LengthAwarePaginator.*specifies 2 template types, but interface.*supports only 1#'

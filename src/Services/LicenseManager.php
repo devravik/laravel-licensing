@@ -345,7 +345,7 @@ class LicenseManager implements LicenseManagerContract
      *
      * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked, per_page)
      * @param  int  $perPage  Number of licenses per page (default: 15)
-     * @return \Illuminate\Database\Eloquent\Collection<int, LicenseContract>|\Illuminate\Contracts\Pagination\LengthAwarePaginator<LicenseContract>
+     * @return \Illuminate\Database\Eloquent\Collection<int, LicenseContract>|\Illuminate\Contracts\Pagination\LengthAwarePaginator<int, LicenseContract>
      */
     public function list(array $filters = [], int $perPage = 15): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
     {

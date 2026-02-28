@@ -84,7 +84,7 @@ interface LicenseManagerContract
      *
      * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked, per_page)
      * @param  int  $perPage  Number of licenses per page (default: 15)
-     * @return Collection<int, LicenseContract>|LengthAwarePaginator<LicenseContract>
+     * @return Collection<int, LicenseContract>|LengthAwarePaginator<int, LicenseContract>
      */
     public function list(array $filters = [], int $perPage = 15): Collection|LengthAwarePaginator;
 
