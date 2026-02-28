@@ -107,6 +107,8 @@ class ActivateLicenseCommand extends Command
             $this->info('✓ License activated successfully!');
             $this->newLine();
             $this->line('<options=bold>Activation Details</>');
+            /** @var \DevRavik\LaravelLicensing\Models\License $license */
+            /** @var \DevRavik\LaravelLicensing\Models\Activation $activation */
             $this->line("  License ID: {$license->id}");
             $this->line("  Product: {$license->product}");
             $this->line("  Binding: {$activation->binding}");
@@ -115,7 +117,7 @@ class ActivateLicenseCommand extends Command
             $this->newLine();
 
             return self::SUCCESS;
-        } catch (\Exception $e) {
+        } catch (LicenseAlreadyActivatedException|SeatLimitExceededException|\Exception $e) {
             $this->error("Failed to activate license: {$e->getMessage()}");
 
             return self::FAILURE;

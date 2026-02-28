@@ -32,8 +32,8 @@ class SignatureVerifier
         try {
             $publicKey = $this->resolveKey($publicKeyConfig);
         } catch (\RuntimeException $e) {
-            // Re-throw RuntimeException (e.g., file not found) as-is
-            throw $e;
+            // Wrap RuntimeException (e.g., file not found) as InvalidSignatureException
+            throw InvalidSignatureException::verificationFailed($e->getMessage());
         }
 
         // Decode the base64-encoded signed key

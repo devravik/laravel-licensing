@@ -3,12 +3,28 @@
 namespace DevRavik\LaravelLicensing\Contracts;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * Defines the required API for a license model.
  *
  * Any class implementing this contract can be used as the license_model
  * in config/license.php without modifying any package internals.
+ *
+ * @property int $id
+ * @property string $key
+ * @property string $product
+ * @property int $owner_id
+ * @property string $owner_type
+ * @property int $seats
+ * @property Carbon|null $expires_at
+ * @property Carbon|null $revoked_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property Collection $activations
+ * @property object|null $owner
  */
 interface LicenseContract
 {
@@ -105,4 +121,45 @@ interface LicenseContract
      * Returns 0 if the license is not in a grace period.
      */
     public function graceDaysRemaining(): int;
+
+    // -------------------------------------------------------------------------
+    // Eloquent Model Methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the activations relationship.
+     *
+     * @return HasMany<\DevRavik\LaravelLicensing\Models\Activation, \DevRavik\LaravelLicensing\Models\License>
+     */
+    public function activations(): HasMany;
+
+    /**
+     * Get the owner relationship.
+     *
+     * @return MorphTo<\Illuminate\Database\Eloquent\Model, \DevRavik\LaravelLicensing\Models\License>
+     */
+    public function owner(): MorphTo;
+
+    /**
+     * Get the value of the model's primary key.
+     *
+     * @return int|string
+     */
+    public function getKey();
+
+    /**
+     * Save the model to the database.
+     *
+     * @param  array<string, mixed>  $options
+     * @return bool
+     */
+    public function save(array $options = []);
+
+    /**
+     * Reload a fresh model instance from the database.
+     *
+     * @param  array<int, string>  $with
+     * @return static
+     */
+    public function fresh(array $with = []);
 }

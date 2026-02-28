@@ -2,11 +2,20 @@
 
 namespace DevRavik\LaravelLicensing\Contracts;
 
+use Carbon\Carbon;
+
 /**
  * Defines the required API for an activation (seat binding) model.
  *
  * Any class implementing this contract can be used as the activation_model
  * in config/license.php without modifying any package internals.
+ *
+ * @property int $id
+ * @property int $license_id
+ * @property string $binding
+ * @property Carbon $activated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 interface ActivationContract
 {

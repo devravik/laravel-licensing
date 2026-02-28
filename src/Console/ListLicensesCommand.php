@@ -2,6 +2,7 @@
 
 namespace DevRavik\LaravelLicensing\Console;
 
+use DevRavik\LaravelLicensing\Contracts\LicenseContract;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
 use DevRavik\LaravelLicensing\Support\LicenseKeyHelper;
 use Illuminate\Console\Command;
@@ -79,6 +80,7 @@ class ListLicensesCommand extends Command
         $tableData = [];
 
         foreach ($licenses as $license) {
+            /** @var \DevRavik\LaravelLicensing\Models\License $license */
             $status = $this->formatStatus($license);
             $expiresAt = $license->expires_at?->format('Y-m-d H:i:s') ?? 'Never';
             $owner = $this->formatOwner($license);
@@ -113,7 +115,7 @@ class ListLicensesCommand extends Command
     /**
      * Format license status with color coding.
      */
-    protected function formatStatus($license): string
+    protected function formatStatus(LicenseContract $license): string
     {
         if ($license->isRevoked()) {
             return '<fg=red>Revoked</>';
@@ -133,15 +135,25 @@ class ListLicensesCommand extends Command
     /**
      * Format owner information.
      */
-    protected function formatOwner($license): string
+    protected function formatOwner(LicenseContract $license): string
     {
+        /** @var \DevRavik\LaravelLicensing\Models\License $license */
         $owner = $license->owner;
 
         if ($owner === null) {
             return "{$license->owner_type}:{$license->owner_id}";
         }
 
-        $ownerName = method_exists($owner, 'name') ? $owner->name : (method_exists($owner, 'email') ? $owner->email : "ID:{$owner->id}");
+        $ownerName = 'ID:'.$owner->id;
+        if (is_object($owner)) {
+            if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
+                $ownerName = $owner->name;
+            } elseif (method_exists($owner, 'email') && property_exists($owner, 'email')) {
+                $ownerName = $owner->email;
+            } elseif (property_exists($owner, 'id')) {
+                $ownerName = 'ID:'.$owner->id;
+            }
+        }
 
         return class_basename($license->owner_type).": {$ownerName}";
     }

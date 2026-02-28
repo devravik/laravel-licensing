@@ -19,8 +19,6 @@ parameters:
         - identifier: return.type
           path: src/Models
 
-        # HasLicenses is a consumer-facing trait intended to be used in host
-        # application models (e.g. User). It is not used internally by the
-        # package, so PHPStan's "used zero times" warning is a false positive.
-        - identifier: trait.unused
-          path: src/Support
+        # LicenseContract is an interface, not a Model, but implementations are Models
+        # This is a false positive - at runtime, Collection contains Model instances
+        - '#Type DevRavik\\LaravelLicensing\\Contracts\\LicenseContract in generic type.*Collection.*is not subtype of template type TModel#'

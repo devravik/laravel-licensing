@@ -68,7 +68,7 @@ class CreateLicenseCommand extends Command
         // Get product
         $product = $this->option('product');
         if (! $nonInteractive && ! $product) {
-            $product = $this->ask('Product name or tier', $product);
+            $product = $this->ask('Product name or tier', $product ?? '');
         }
 
         if (! $product) {
@@ -80,7 +80,8 @@ class CreateLicenseCommand extends Command
         // Get seats
         $seats = $this->option('seats');
         if (! $nonInteractive && ! $seats) {
-            $seats = $this->ask('Number of seats', 1);
+            $seatsInput = $this->ask('Number of seats', '1');
+            $seats = $seatsInput ? (int) $seatsInput : 1;
         }
         $seats = (int) ($seats ?? 1);
 
@@ -108,6 +109,7 @@ class CreateLicenseCommand extends Command
         try {
             $license = $builder->create();
 
+            /** @var \DevRavik\LaravelLicensing\Models\License $license */
             $this->newLine();
             $this->info('✓ License created successfully!');
             $this->newLine();

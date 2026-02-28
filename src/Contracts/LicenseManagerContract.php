@@ -3,6 +3,8 @@
 namespace DevRavik\LaravelLicensing\Contracts;
 
 use DevRavik\LaravelLicensing\Services\LicenseBuilder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -76,4 +78,21 @@ interface LicenseManagerContract
      * @param  string  $key  The raw license key.
      */
     public function find(string $key): ?LicenseContract;
+
+    /**
+     * List licenses with optional filtering.
+     *
+     * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked, per_page)
+     * @param  int  $perPage  Number of licenses per page (default: 15)
+     * @return Collection<int, LicenseContract>|LengthAwarePaginator<LicenseContract>
+     */
+    public function list(array $filters = [], int $perPage = 15): Collection|LengthAwarePaginator;
+
+    /**
+     * Get license and activation statistics.
+     *
+     * @param  string|null  $product  Filter statistics by product
+     * @return array<string, int>
+     */
+    public function getStatistics(?string $product = null): array;
 }

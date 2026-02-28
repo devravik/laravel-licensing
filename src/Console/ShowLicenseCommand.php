@@ -2,6 +2,7 @@
 
 namespace DevRavik\LaravelLicensing\Console;
 
+use DevRavik\LaravelLicensing\Contracts\LicenseContract;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
 use DevRavik\LaravelLicensing\Support\LicenseKeyHelper;
 use Illuminate\Console\Command;
@@ -48,6 +49,7 @@ class ShowLicenseCommand extends Command
 
         // If --key was provided, use it for display (it's the raw key)
         // Otherwise, use the key from the license (which may be hashed)
+        /** @var \DevRavik\LaravelLicensing\Models\License $license */
         $displayKey = $this->option('key') ?: ($license->key ?? 'N/A');
 
         $this->line('<options=bold>License Details</>');
@@ -67,11 +69,15 @@ class ShowLicenseCommand extends Command
         if ($owner) {
             $this->line("  Type: {$license->owner_type}");
             $this->line("  ID: {$license->owner_id}");
-            if (method_exists($owner, 'name')) {
-                $this->line("  Name: {$owner->name}");
-            }
-            if (method_exists($owner, 'email')) {
-                $this->line("  Email: {$owner->email}");
+            if (is_object($owner)) {
+                if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
+                    /** @var object{name: string} $owner */
+                    $this->line("  Name: {$owner->name}");
+                }
+                if (method_exists($owner, 'email') && property_exists($owner, 'email')) {
+                    /** @var object{email: string} $owner */
+                    $this->line("  Email: {$owner->email}");
+                }
             }
         } else {
             $this->line("  Type: {$license->owner_type}");
@@ -111,6 +117,7 @@ class ShowLicenseCommand extends Command
         if ($activations->isNotEmpty()) {
             $this->line('<options=bold>Activations</>');
             foreach ($activations as $activation) {
+                /** @var \DevRavik\LaravelLicensing\Models\Activation $activation */
                 $this->line("  • {$activation->binding} (activated: {$activation->activated_at->format('Y-m-d H:i:s')})");
             }
         } else {
@@ -130,7 +137,7 @@ class ShowLicenseCommand extends Command
     /**
      * Format license status with color coding.
      */
-    protected function formatStatus($license): string
+    protected function formatStatus(LicenseContract $license): string
     {
         if ($license->isRevoked()) {
             return '<fg=red>Revoked</>';

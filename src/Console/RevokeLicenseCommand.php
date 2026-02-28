@@ -53,6 +53,7 @@ class RevokeLicenseCommand extends Command
         }
 
         // Show license info
+        /** @var \DevRavik\LaravelLicensing\Models\License $license */
         $this->line('<options=bold>License to Revoke</>');
         $this->line("  ID: {$license->id}");
         $this->line("  Product: {$license->product}");
@@ -76,6 +77,7 @@ class RevokeLicenseCommand extends Command
                 $manager->revoke($key);
             } else {
                 // Revoking by ID - update directly since we don't have raw key
+                /** @var \DevRavik\LaravelLicensing\Models\License $license */
                 $license->revoked_at = now();
                 $license->save();
             }

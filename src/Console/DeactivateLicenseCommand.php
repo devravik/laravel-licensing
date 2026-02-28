@@ -50,6 +50,7 @@ class DeactivateLicenseCommand extends Command
 
         if (! $binding) {
             // Show available activations
+            /** @var \DevRavik\LaravelLicensing\Models\License $license */
             $activations = $license->activations;
             if ($activations->isEmpty()) {
                 $this->warn('No activations found for this license.');
@@ -60,6 +61,7 @@ class DeactivateLicenseCommand extends Command
             $this->line('<options=bold>Available Activations</>');
             $choices = [];
             foreach ($activations as $activation) {
+                /** @var \DevRavik\LaravelLicensing\Models\Activation $activation */
                 $choices[] = $activation->binding;
                 $this->line("  • {$activation->binding}");
             }
@@ -84,11 +86,13 @@ class DeactivateLicenseCommand extends Command
                 $this->newLine();
                 $this->info('✓ Activation deactivated successfully!');
                 $this->newLine();
+                /** @var \DevRavik\LaravelLicensing\Models\License $license */
                 $this->line('<options=bold>Deactivation Details</>');
                 $this->line("  License ID: {$license->id}");
                 $this->line("  Product: {$license->product}");
                 $this->line("  Binding: {$binding}");
-                $this->line("  Seats Used: {$license->fresh()->countActivations()} / {$license->seats}");
+                $freshLicense = $license->fresh();
+                $this->line("  Seats Used: {$freshLicense->countActivations()} / {$license->seats}");
                 $this->newLine();
             } else {
                 $this->warn('Binding not found or already deactivated.');

@@ -313,15 +313,7 @@ class LicenseManager implements LicenseManagerContract
 
         // If using signed generation, verify signature first
         if ($generationStrategy === 'signed') {
-            try {
-                $this->signatureVerifier->verify($rawKey);
-            } catch (InvalidSignatureException $e) {
-                // Re-throw signature exceptions
-                throw $e;
-            } catch (\Exception $e) {
-                // Wrap other exceptions (e.g., missing keys, invalid format)
-                throw InvalidSignatureException::verificationFailed($e->getMessage());
-            }
+            $this->signatureVerifier->verify($rawKey);
         }
 
         $licenseModelClass = config('license.license_model');
@@ -351,9 +343,11 @@ class LicenseManager implements LicenseManagerContract
     /**
      * List licenses with optional filtering.
      *
-     * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked)
+     * @param  array<string, mixed>  $filters  Filter options (product, owner_type, owner_id, status, expired, revoked, per_page)
+     * @param  int  $perPage  Number of licenses per page (default: 15)
+     * @return \Illuminate\Database\Eloquent\Collection<int, LicenseContract>|\Illuminate\Contracts\Pagination\LengthAwarePaginator<LicenseContract>
      */
-    public function list(array $filters = []): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
+    public function list(array $filters = [], int $perPage = 15): \Illuminate\Database\Eloquent\Collection|\Illuminate\Contracts\Pagination\LengthAwarePaginator
     {
         $licenseModelClass = config('license.license_model');
         $query = $licenseModelClass::query();
@@ -407,6 +401,11 @@ class LicenseManager implements LicenseManagerContract
         // Paginate if requested
         if (isset($filters['per_page']) && $filters['per_page'] > 0) {
             return $query->paginate((int) $filters['per_page']);
+        }
+
+        // Use perPage parameter if no per_page in filters
+        if ($perPage > 0) {
+            return $query->paginate($perPage);
         }
 
         return $query->get();
