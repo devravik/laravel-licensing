@@ -14,7 +14,7 @@ License keys are hashed before storage (never plaintext in the database), activa
 
 ---
 
-## 🚀 Starter Kit
+## Starter Kit
 
 **New to this package?** Check out the [Laravel Licensing Starter](https://github.com/devravik/laravel-licensing-starter)  a complete working example that demonstrates how to use this package in a real Laravel application.
 
