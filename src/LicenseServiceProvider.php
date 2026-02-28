@@ -2,14 +2,26 @@
 
 namespace DevRavik\LaravelLicensing;
 
+use DevRavik\LaravelLicensing\Console\ActivateLicenseCommand;
+use DevRavik\LaravelLicensing\Console\CreateLicenseCommand;
+use DevRavik\LaravelLicensing\Console\DeactivateLicenseCommand;
+use DevRavik\LaravelLicensing\Console\GenerateLicenseKeysCommand;
+use DevRavik\LaravelLicensing\Console\LicenseStatisticsCommand;
 use DevRavik\LaravelLicensing\Console\LicenseStatusCommand;
+use DevRavik\LaravelLicensing\Console\ListLicensesCommand;
+use DevRavik\LaravelLicensing\Console\RevokeLicenseCommand;
+use DevRavik\LaravelLicensing\Console\ShowLicenseCommand;
 use DevRavik\LaravelLicensing\Contracts\KeyGeneratorContract;
+use DevRavik\LaravelLicensing\Contracts\LicenseGeneratorInterface;
 use DevRavik\LaravelLicensing\Contracts\LicenseManagerContract;
 use DevRavik\LaravelLicensing\Http\Middleware\CheckLicense;
 use DevRavik\LaravelLicensing\Http\Middleware\CheckValidLicense;
+use DevRavik\LaravelLicensing\Services\Generators\RandomLicenseGenerator;
+use DevRavik\LaravelLicensing\Services\Generators\SignedLicenseGenerator;
 use DevRavik\LaravelLicensing\Services\KeyGenerator;
 use DevRavik\LaravelLicensing\Services\LicenseManager;
 use DevRavik\LaravelLicensing\Services\LicenseValidator;
+use DevRavik\LaravelLicensing\Services\SignatureVerifier;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,7 +50,21 @@ class LicenseServiceProvider extends ServiceProvider
             'license'
         );
 
-        // Bind the key generator — swappable by consumers.
+        // Bind the license generator based on config strategy.
+        $this->app->bind(
+            LicenseGeneratorInterface::class,
+            function ($app) {
+                $strategy = config('license.license_generation', 'random');
+
+                return match ($strategy) {
+                    'signed' => new SignedLicenseGenerator,
+                    'random' => new RandomLicenseGenerator,
+                    default => new RandomLicenseGenerator,
+                };
+            }
+        );
+
+        // Bind the key generator — swappable by consumers (deprecated, use LicenseGeneratorInterface).
         $this->app->bind(
             KeyGeneratorContract::class,
             KeyGenerator::class
@@ -47,6 +73,9 @@ class LicenseServiceProvider extends ServiceProvider
         // Bind the license validator — swappable by consumers.
         $this->app->bind(LicenseValidator::class);
 
+        // Bind the signature verifier — swappable by consumers.
+        $this->app->bind(SignatureVerifier::class);
+
         // Bind the license manager as a singleton — one instance per request.
         // Consumers can override this binding in their own AppServiceProvider.
         $this->app->singleton(
@@ -54,9 +83,11 @@ class LicenseServiceProvider extends ServiceProvider
             function ($app) {
                 return new LicenseManager(
                     keyGenerator: $app->make(KeyGeneratorContract::class),
+                    licenseGenerator: $app->make(LicenseGeneratorInterface::class),
                     hasher: $app['hash'],
                     events: $app['events'],
                     validator: $app->make(LicenseValidator::class),
+                    signatureVerifier: $app->make(SignatureVerifier::class),
                 );
             }
         );
@@ -107,6 +138,14 @@ class LicenseServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 LicenseStatusCommand::class,
+                GenerateLicenseKeysCommand::class,
+                ListLicensesCommand::class,
+                ShowLicenseCommand::class,
+                CreateLicenseCommand::class,
+                RevokeLicenseCommand::class,
+                ActivateLicenseCommand::class,
+                DeactivateLicenseCommand::class,
+                LicenseStatisticsCommand::class,
             ]);
         }
     }

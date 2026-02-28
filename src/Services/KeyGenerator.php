@@ -11,6 +11,9 @@ use DevRavik\LaravelLicensing\Contracts\KeyGeneratorContract;
  * The output is a lowercase hexadecimal string. 32 hex characters
  * represent 128 bits of entropy, which is sufficient for license keys
  * and is consistent with UUID security levels.
+ *
+ * @deprecated Use RandomLicenseGenerator instead. This class is maintained
+ *            for backward compatibility only and will be removed in v2.0.
  */
 class KeyGenerator implements KeyGeneratorContract
 {

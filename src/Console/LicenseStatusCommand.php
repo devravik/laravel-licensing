@@ -31,11 +31,18 @@ class LicenseStatusCommand extends Command
         // ── Configuration ───────────────────────────────────────────────────
         $this->line('<options=bold>Configuration</>');
 
+        $licenseGeneration = config('license.license_generation', 'random');
+        $hasPrivateKey = ! empty(config('license.signature.private_key'));
+        $hasPublicKey = ! empty(config('license.signature.public_key'));
+
         $config = [
             ['Key Length',           config('license.key_length', 32)],
             ['Hash Keys',            config('license.hash_keys', true) ? '<fg=green>enabled</>' : '<fg=yellow>disabled (plaintext — not recommended for production)</>'],
             ['Default Expiry (days)', config('license.default_expiry_days') ?? '<fg=yellow>null (licenses never expire by default)</>'],
             ['Grace Period (days)',  config('license.grace_period_days', 0)],
+            ['License Generation',   $licenseGeneration === 'signed' ? '<fg=cyan>signed (Ed25519)</>' : '<fg=blue>random</>'],
+            ['Private Key',          $hasPrivateKey ? '<fg=green>configured</>' : '<fg=yellow>not set</>'],
+            ['Public Key',           $hasPublicKey ? '<fg=green>configured</>' : '<fg=yellow>not set</>'],
             ['License Model',       config('license.license_model')],
             ['Activation Model',    config('license.activation_model')],
         ];

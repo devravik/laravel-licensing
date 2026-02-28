@@ -82,4 +82,42 @@ return [
     */
     'grace_period_days' => env('LICENSE_GRACE_PERIOD_DAYS', 7),
 
+    /*
+    |--------------------------------------------------------------------------
+    | License Generation Strategy
+    |--------------------------------------------------------------------------
+    |
+    | The strategy used to generate license keys. Options:
+    |
+    | - 'random': Generates cryptographically secure random keys (default)
+    | - 'signed': Generates Ed25519-signed license keys with embedded payload
+    |
+    | When using 'signed', you must configure the signature keys below.
+    |
+    */
+    'license_generation' => env('LICENSE_GENERATION', 'random'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Signature Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Ed25519 public and private keys for signed license generation.
+    | Required when 'license_generation' is set to 'signed'.
+    |
+    | Keys can be provided as:
+    | - File paths: '/path/to/key.file' (file contains base64-encoded key)
+    | - Direct strings: 'base64_encoded_key_string' (base64-encoded key)
+    |
+    | Generate a key pair using:
+    |   $keypair = sodium_crypto_sign_keypair();
+    |   $publicKey = base64_encode(sodium_crypto_sign_publickey($keypair));
+    |   $privateKey = base64_encode(sodium_crypto_sign_secretkey($keypair));
+    |
+    */
+    'signature' => [
+        'public_key' => env('LICENSE_PUBLIC_KEY'),
+        'private_key' => env('LICENSE_PRIVATE_KEY'),
+    ],
+
 ];

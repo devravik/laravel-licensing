@@ -7,6 +7,9 @@ namespace DevRavik\LaravelLicensing\Contracts;
  *
  * The returned string is the plaintext key — it is hashed by the
  * LicenseManager before being stored if hash_keys is enabled.
+ *
+ * @deprecated Use LicenseGeneratorInterface instead. This interface is maintained
+ *            for backward compatibility only and will be removed in v2.0.
  */
 interface KeyGeneratorContract
 {
@@ -18,6 +21,8 @@ interface KeyGeneratorContract
      *
      * @param  int  $length  Number of characters in the generated key.
      * @return string The raw (unhashed) license key.
+     *
+     * @deprecated Use LicenseGeneratorInterface::generate() instead.
      */
     public function generate(int $length): string;
 }
