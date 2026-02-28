@@ -24,5 +24,11 @@ parameters:
         - '#Type DevRavik\\LaravelLicensing\\Contracts\\LicenseContract in generic type.*Collection.*is not subtype of template type TModel#'
 
         # LengthAwarePaginator generic type specification differences between PHPStan/Laravel versions
-        # CI environment may require TKey,TValue while local PHPStan expects only TItem - both are valid
+        # Local PHPStan expects only TItem - ignore this error locally (CI uses 2 types correctly)
         - '#Generic type Illuminate\\Contracts\\Pagination\\LengthAwarePaginator.*specifies 2 template types, but interface.*supports only 1#'
+
+        # HasLicenses trait is for external use in host applications (not used internally)
+        # PHPStan only analyzes src/ directory, so it doesn't see usage in tests/
+        # This pattern will match in CI where the trait appears unused
+        - message: '#Trait.*is used zero times#'
+          path: src/Support
