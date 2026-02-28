@@ -23,7 +23,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon|null $revoked_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @property Collection $activations
+ * @property Collection<int, \DevRavik\LaravelLicensing\Models\Activation> $activations
  * @property object|null $owner
  */
 interface LicenseContract

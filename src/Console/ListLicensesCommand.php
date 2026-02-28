@@ -145,14 +145,12 @@ class ListLicensesCommand extends Command
         }
 
         $ownerName = 'ID:'.$owner->id;
-        if (is_object($owner)) {
-            if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
-                $ownerName = $owner->name;
-            } elseif (method_exists($owner, 'email') && property_exists($owner, 'email')) {
-                $ownerName = $owner->email;
-            } elseif (property_exists($owner, 'id')) {
-                $ownerName = 'ID:'.$owner->id;
-            }
+        if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
+            $ownerName = $owner->name;
+        } elseif (method_exists($owner, 'email') && property_exists($owner, 'email')) {
+            $ownerName = $owner->email;
+        } elseif (property_exists($owner, 'id')) {
+            $ownerName = 'ID:'.$owner->id;
         }
 
         return class_basename($license->owner_type).": {$ownerName}";

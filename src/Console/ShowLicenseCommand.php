@@ -69,15 +69,13 @@ class ShowLicenseCommand extends Command
         if ($owner) {
             $this->line("  Type: {$license->owner_type}");
             $this->line("  ID: {$license->owner_id}");
-            if (is_object($owner)) {
-                if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
-                    /** @var object{name: string} $owner */
-                    $this->line("  Name: {$owner->name}");
-                }
-                if (method_exists($owner, 'email') && property_exists($owner, 'email')) {
-                    /** @var object{email: string} $owner */
-                    $this->line("  Email: {$owner->email}");
-                }
+            if (method_exists($owner, 'name') && property_exists($owner, 'name')) {
+                /** @var object{name: string} $owner */
+                $this->line("  Name: {$owner->name}");
+            }
+            if (method_exists($owner, 'email') && property_exists($owner, 'email')) {
+                /** @var object{email: string} $owner */
+                $this->line("  Email: {$owner->email}");
             }
         } else {
             $this->line("  Type: {$license->owner_type}");

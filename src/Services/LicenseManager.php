@@ -353,17 +353,17 @@ class LicenseManager implements LicenseManagerContract
         $query = $licenseModelClass::query();
 
         // Filter by product
-        if (isset($filters['product']) && $filters['product'] !== null) {
+        if (isset($filters['product']) && is_string($filters['product']) && $filters['product'] !== '') {
             $query->where('product', $filters['product']);
         }
 
         // Filter by owner type
-        if (isset($filters['owner_type']) && $filters['owner_type'] !== null) {
+        if (isset($filters['owner_type']) && is_string($filters['owner_type']) && $filters['owner_type'] !== '') {
             $query->where('owner_type', $filters['owner_type']);
         }
 
         // Filter by owner ID
-        if (isset($filters['owner_id']) && $filters['owner_id'] !== null) {
+        if (isset($filters['owner_id']) && is_int($filters['owner_id'])) {
             $query->where('owner_id', $filters['owner_id']);
         }
 
@@ -427,7 +427,7 @@ class LicenseManager implements LicenseManagerContract
         $activationModelClass = config('license.activation_model');
 
         $licenseQuery = $licenseModelClass::query();
-        if ($product !== null) {
+        if (is_string($product) && $product !== '') {
             $licenseQuery->where('product', $product);
         }
 
@@ -453,7 +453,7 @@ class LicenseManager implements LicenseManagerContract
 
         // Calculate used seats (total activations)
         $usedSeats = $activationModelClass::query()
-            ->when($product !== null, function ($q) use ($product, $licenseModelClass) {
+            ->when(is_string($product) && $product !== '', function ($q) use ($product, $licenseModelClass) {
                 $licenseIds = $licenseModelClass::where('product', $product)->pluck('id');
                 $q->whereIn('license_id', $licenseIds);
             })
