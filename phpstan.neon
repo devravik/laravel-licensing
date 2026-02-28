@@ -5,6 +5,7 @@ parameters:
     paths:
         - src
     level: 6
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         # new static() in named constructors is intentional — all factory methods
         # carry @return static docblocks and the subclass constructor signatures
@@ -24,7 +25,7 @@ parameters:
         - '#Type DevRavik\\LaravelLicensing\\Contracts\\LicenseContract in generic type.*Collection.*is not subtype of template type TModel#'
 
         # LengthAwarePaginator generic type specification differences between PHPStan/Laravel versions
-        # Local PHPStan expects only TItem - ignore this error locally (CI uses 2 types correctly)
+        # Local PHPStan expects only TItem, CI accepts 2 types - ignore pattern needed locally
         - '#Generic type Illuminate\\Contracts\\Pagination\\LengthAwarePaginator.*specifies 2 template types, but interface.*supports only 1#'
 
         # HasLicenses trait is for external use in host applications (not used internally)
